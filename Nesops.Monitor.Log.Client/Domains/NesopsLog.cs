@@ -154,7 +154,7 @@ namespace Nesops.Monitor.Log.Client.Domains
             var uri = _routePrefix;
             var log = new Logs()
             {
-                Exception = ex.ToString(),
+                Exception = JsonConvert.SerializeObject(ex),
                 Level = "Error",
                 LogEvent = null,
                 Message = ex.Message
@@ -174,7 +174,7 @@ namespace Nesops.Monitor.Log.Client.Domains
             var uri = _routePrefix;
             var log = new Logs()
             {
-                Exception = ex.ToString(),
+                Exception = JsonConvert.SerializeObject(ex),
                 Level = "Error",
                 LogEvent = logEvent,
                 Message = ex.Message
@@ -189,11 +189,11 @@ namespace Nesops.Monitor.Log.Client.Domains
             mess.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appSettings.AuthorizeConfiguration.access_token);
             var result = _client.Http.SendAsync(mess).Result;
         }
-        private async void CheckAuthorize()
+        private void CheckAuthorize()
         {
             var authorize = new NesopsAuthorize();
             if (!authorize.CheckAuthorizeExpiredTime())
-                await authorize.UpdateAuthorize();
+                authorize.UpdateAuthorize();
         }
     }
 }

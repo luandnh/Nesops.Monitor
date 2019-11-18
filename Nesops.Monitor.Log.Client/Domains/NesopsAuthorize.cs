@@ -45,7 +45,7 @@ namespace Nesops.Monitor.Log.Client.Domains
                 RequestUri = new Uri(uri, UriKind.Relative),
                 Content = new StringContent(json, UnicodeEncoding.UTF8, "application/json")
             };
-            var result = await _client.Http.SendAsync(mess);
+            var result = _client.Http.SendAsync(mess).Result;
 
 
             if (result.IsSuccessStatusCode)
@@ -78,9 +78,9 @@ namespace Nesops.Monitor.Log.Client.Domains
             }
             return null;
         }
-        public async ValueTask<bool> UpdateAuthorize()
+        public bool UpdateAuthorize()
         {
-            var result = await Authorize(_appSettings.LocalUsername, _appSettings.LocalPassword);
+            var result =  Authorize(_appSettings.LocalUsername, _appSettings.LocalPassword).Result;
             if (result == null)
             {
                 return false;

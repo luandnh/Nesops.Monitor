@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NesopsService.Data;
@@ -40,6 +41,7 @@ namespace Nesops.Monitor.Log.Controllers
             return Ok(readModels);
         }
         [HttpPost]
+        [Authorize(Roles ="Web Application")]
         public async Task<ActionResult<LogsReadModel>> Create([FromBody]LogsCreateModel createModel, CancellationToken cancellationToken)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;

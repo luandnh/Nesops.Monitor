@@ -10,7 +10,11 @@ namespace Nesops.Monitor.Log.Filters
 {
     public class ValidatorActionFilter : IActionFilter
     {
-        NesopsLog Log = new NesopsLog();
+        private readonly NesopsLog Log;
+        public ValidatorActionFilter(NesopsLog _log)
+        {
+            this.Log = _log;
+        }
         public void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (!filterContext.ModelState.IsValid)
@@ -21,21 +25,6 @@ namespace Nesops.Monitor.Log.Filters
 
         public void OnActionExecuted(ActionExecutedContext filterContext)
         {
-
-            if (filterContext.Exception != null)
-            {
-                filterContext.Result = new ObjectResult(new BaseResponseModel<object> { message = filterContext.Exception.Message, code = (int)HttpStatusCode.InternalServerError })
-                {
-                    StatusCode = 500,
-                };
-                if (filterContext.HttpContext.Request.Method == "POST")
-                {
-                    var json = JsonConvert.SerializeObject(filterContext.HttpContext.Request.Body);
-                    Log.Error(filterContext.Exception);
-                }
-                filterContext.ExceptionHandled = true;
-            }
-
         }
     }
 }

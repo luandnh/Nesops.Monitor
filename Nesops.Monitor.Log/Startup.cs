@@ -15,6 +15,8 @@ using System.Reflection;
 using System.IO;
 using Nesops.Monitor.Log.Filters;
 using FluentValidation.AspNetCore;
+using Nesops.Monitor.Log.Client.Configurations.JWT;
+using Nesops.Monitor.Log.Client.Domains;
 
 namespace Nesops.Monitor.Log
 {
@@ -37,6 +39,10 @@ namespace Nesops.Monitor.Log
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<NesopsLog>();
+            #region Authorization Config
+            JWTBuilder.BuildJWTService(services);
+            #endregion
             services.AddDbContext<NesopsMonitorContext>(options => options.UseSqlServer(Configuration.GetConnectionString("NesopsMonitorDB")));
             #region
             ServiceRootConfig.Entry(services, Configuration);
@@ -104,6 +110,7 @@ namespace Nesops.Monitor.Log
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(typeof(ValidatorActionFilter));
+                options.Filters.Add(typeof(CustomExceptionFilter));
             }).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
         }
 

@@ -96,6 +96,16 @@ namespace Nesops.Monitor.Log.Client
                 Console.WriteLine("Error writing app settings");
             }
         }
+        public void ResetAppSettings()
+        {
+            UpdateAppSettings<string>("NesopsConfiguration:MonitorUrl", "http://monitor.nesops.xyz");
+            UpdateAppSettings<string>("NesopsConfiguration:AuthorizeUrl", "http://authorize.nesops.xyz");
+            UpdateAppSettings<string>("NesopsConfiguration:LocalUsername", "nesops.xyz");
+            UpdateAppSettings<string>("NesopsConfiguration:LocalPassword", "nesops.xyz");
+            UpdateAppSettings<string>("NesopsConfiguration:AuthorizeConfiguration:Access_token", "token");
+            UpdateAppSettings<string>("NesopsConfiguration:AuthorizeConfiguration:Expire_utc", DateTime.UtcNow.AddDays(-1).ToString());
+            UpdateAppSettings<string>("NesopsConfiguration:AuthorizeConfiguration:Issued_utc", DateTime.UtcNow.AddDays(-1).ToString());
+        }
     }
     public class NesopsHttpClientInfo
     {
