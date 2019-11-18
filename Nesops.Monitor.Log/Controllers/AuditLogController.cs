@@ -41,13 +41,10 @@ namespace Nesops.Monitor.Log.Controllers
         [HttpPost]
         public async Task<ActionResult<AuditLogsReadModel>> Create([FromBody]AuditLogsCreateModel createModel, CancellationToken cancellationToken)
         {
-            //var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            //createModel.SysId = Guid.Parse(userId);
-            //var readModel = await CreateModel(createModel, cancellationToken);
-            //return CreatedAtAction(nameof(Get), new { id = readModel.Id }, readModel);
-            int a = 1, b, c = 0;
-            b = a / c;
-            return Ok();
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            createModel.SysId = Guid.Parse(userId);
+            var readModel = await CreateModel(createModel, cancellationToken);
+            return CreatedAtAction(nameof(Get), new { id = readModel.Id }, readModel);
         }
     }
 }
