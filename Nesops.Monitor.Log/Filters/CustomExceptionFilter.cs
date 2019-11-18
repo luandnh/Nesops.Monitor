@@ -13,9 +13,9 @@ namespace Nesops.Monitor.Log.Filters
     public class CustomExceptionFilter : IExceptionFilter
     {
         private readonly NesopsLog Log;
-        private CustomExceptionFilter(NesopsLog _log)
+        public CustomExceptionFilter(NesopsLog _log)
         {
-            this.Log = _log;
+            Log = _log;
         }
         public void OnException(ExceptionContext context)
         {
