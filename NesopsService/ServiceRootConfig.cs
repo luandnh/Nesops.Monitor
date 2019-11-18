@@ -27,11 +27,11 @@ namespace NesopsService
             #region Auto Mapper Config
             // register AutoMapper profiles
             //services.AddAutoMapper(typeof(AspNetUsersProfile));
-            services.AddAutoMapper(typeof(ApplicationsProfile).GetTypeInfo().Assembly);
+            services.AddAutoMapper(typeof(LogsProfile).GetTypeInfo().Assembly);
             #endregion
             #region Config Validator
             // FluentValidation read on class extend AbstractValidator
-            var types = typeof(ApplicationsCreateModelValidator).Assembly.GetTypes();
+            var types = typeof(ServerLogsCreateModelValidator).Assembly.GetTypes();
             new AssemblyScanner(types).ForEach(pair => {
                 services.Add(ServiceDescriptor.Transient(pair.InterfaceType, pair.ValidatorType));
             });

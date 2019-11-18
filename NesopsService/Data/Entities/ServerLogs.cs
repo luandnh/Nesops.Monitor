@@ -15,9 +15,9 @@ namespace NesopsService.Data.Entities
         #region Generated Properties
         public Guid Id { get; set; }
 
-        public DateTime CreateAt { get; set; }
+        public DateTime CreateAt { get; set; } = DateTime.UtcNow.AddHours(7);
 
-        public DateTime UpdateAt { get; set; }
+        public DateTime UpdateAt { get; set; } = DateTime.UtcNow.AddHours(7);
 
         public int SeqId { get; set; }
 
@@ -25,15 +25,15 @@ namespace NesopsService.Data.Entities
 
         public string Message { get; set; }
 
-        public int Level { get; set; }
+        public string Type { get; set; }
+
+        public string Level { get; set; }
 
         public bool Active { get; set; }
 
         #endregion
 
         #region Generated Relationships
-        public virtual Servers ServerServers { get; set; }
-
         #endregion
 
     }

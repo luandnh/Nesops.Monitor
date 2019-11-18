@@ -1,10 +1,17 @@
+using NesopsService.Identifier;
 using System;
 using System.Collections.Generic;
 
-namespace NesopsService.Domain.Models
+namespace NesopsService.Data.Entities
 {
-    public partial class LogsReadModel
+    public partial class AuditLogs : IHaveIdentifier
     {
+        public AuditLogs()
+        {
+            #region Generated Constructor
+            #endregion
+        }
+
         #region Generated Properties
         public Guid Id { get; set; }
 
@@ -20,12 +27,15 @@ namespace NesopsService.Domain.Models
 
         public string LogEvent { get; set; }
 
-        public DateTime CreateAt { get; set; }
+        public DateTime CreateAt { get; set; } = DateTime.UtcNow.AddHours(7);
 
-        public DateTime UpdateAt { get; set; }
+        public DateTime UpdateAt { get; set; } = DateTime.UtcNow.AddHours(7);
 
         public bool Active { get; set; }
 
+        #endregion
+
+        #region Generated Relationships
         #endregion
 
     }

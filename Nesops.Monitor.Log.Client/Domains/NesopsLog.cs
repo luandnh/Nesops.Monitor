@@ -13,18 +13,22 @@ namespace Nesops.Monitor.Log.Client.Domains
     {
         protected NesopsHttpClient _client { get; set; }
         protected string _routePrefix = "api/logs";
+        protected AppSettingsModel _appSettings = new AppSettingsModel();
         public NesopsLog()
         {
             var client = new NesopsHttpClient();
-            var config = client.NesopsHttpClientConfig();
-            client = new NesopsHttpClient(config.MonitorUrl);
+            _appSettings = client.NesopsHttpClientConfig();
+            client = new NesopsHttpClient(_appSettings.MonitorUrl);
             this._client = client;
+            CheckAuthorize();
         }
         public NesopsLog(NesopsHttpClient client)
         {
+            _appSettings = client.NesopsHttpClientConfig();
             this._client = client;
+            CheckAuthorize();
         }
-        public async ValueTask Information(string message)
+        public void Information(string message)
         {
             var uri = _routePrefix;
             var log = new Logs()
@@ -44,7 +48,7 @@ namespace Nesops.Monitor.Log.Client.Domains
             var result = _client.Http.SendAsync(mess).Result;
 
         }
-        public async ValueTask Information(string message,string logEvent)
+        public void Information(string message,string logEvent)
         {
             var uri = _routePrefix;
             var log = new Logs()
@@ -63,7 +67,7 @@ namespace Nesops.Monitor.Log.Client.Domains
             };
             var result = _client.Http.SendAsync(mess).Result;
         }
-        public async ValueTask Warning(string message)
+        public void Warning(string message)
         {
             var uri = _routePrefix;
             var log = new Logs()
@@ -82,7 +86,7 @@ namespace Nesops.Monitor.Log.Client.Domains
             };
             var result = _client.Http.SendAsync(mess).Result;
         }
-        public async ValueTask Warning(string message, string logEvent)
+        public void Warning(string message, string logEvent)
         {
             var uri = _routePrefix;
             var log = new Logs()
@@ -101,7 +105,7 @@ namespace Nesops.Monitor.Log.Client.Domains
             };
             var result = _client.Http.SendAsync(mess).Result;
         }
-        public async ValueTask Exception(string message)
+        public void Exception(string message)
         {
             var uri = _routePrefix;
             var log = new Logs()
@@ -120,7 +124,7 @@ namespace Nesops.Monitor.Log.Client.Domains
             };
             var result = _client.Http.SendAsync(mess).Result;
         }
-        public async ValueTask Error(string message, string logEvent)
+        public void Error(string message, string logEvent)
         {
             var uri = _routePrefix;
             var log = new Logs()
@@ -139,7 +143,7 @@ namespace Nesops.Monitor.Log.Client.Domains
             };
             var result = _client.Http.SendAsync(mess).Result;
         }
-        public async ValueTask Error(Exception ex)
+        public void Error(Exception ex)
         {
             var uri = _routePrefix;
             var log = new Logs()
@@ -158,7 +162,7 @@ namespace Nesops.Monitor.Log.Client.Domains
             };
             var result = _client.Http.SendAsync(mess).Result;
         }
-        public async ValueTask Error(Exception ex, string logEvent)
+        public void Error(Exception ex, string logEvent)
         {
             var uri = _routePrefix;
             var log = new Logs()
@@ -177,6 +181,11 @@ namespace Nesops.Monitor.Log.Client.Domains
             };
             var result = _client.Http.SendAsync(mess).Result;
         }
-
+        private async void CheckAuthorize()
+        {
+            var authorize = new NesopsAuthorize();
+            if (!authorize.CheckAuthorizeExpiredTime())
+                await authorize.UpdateAuthorize();
+        }
     }
 }

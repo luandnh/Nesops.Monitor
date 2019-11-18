@@ -52,10 +52,17 @@ namespace NesopsService.Data.Mapping
                 .HasColumnType("varchar(500)")
                 .HasMaxLength(500);
 
+            builder.Property(t => t.Type)
+                .IsRequired()
+                .HasColumnName("Type")
+                .HasColumnType("varchar(50)")
+                .HasMaxLength(50);
+
             builder.Property(t => t.Level)
                 .IsRequired()
                 .HasColumnName("Level")
-                .HasColumnType("int");
+                .HasColumnType("varchar(50)")
+                .HasMaxLength(50);
 
             builder.Property(t => t.Active)
                 .IsRequired()
@@ -64,11 +71,6 @@ namespace NesopsService.Data.Mapping
                 .HasDefaultValueSql("((1))");
 
             // relationships
-            builder.HasOne(t => t.ServerServers)
-                .WithMany(t => t.ServerServerLogs)
-                .HasForeignKey(d => d.ServerId)
-                .HasConstraintName("FK__ServerLog__Serve__628FA481");
-
             #endregion
         }
 

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NesopsService.Service.Models.RequestModels
 {
-    public class ServerRequestModel : RequestModelBase
+    public class AuditLogRequestModel : RequestModelBase
     {
     }
 }

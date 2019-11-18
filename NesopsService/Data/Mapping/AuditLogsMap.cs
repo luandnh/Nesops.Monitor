@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NesopsService.Data.Mapping
 {
-    public partial class LogsMap
-        : IEntityTypeConfiguration<NesopsService.Data.Entities.Logs>
+    public partial class AuditLogsMap
+        : IEntityTypeConfiguration<NesopsService.Data.Entities.AuditLogs>
     {
-        public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<NesopsService.Data.Entities.Logs> builder)
+        public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<NesopsService.Data.Entities.AuditLogs> builder)
         {
             #region Generated Configure
             // table
-            builder.ToTable("Logs", "dbo");
+            builder.ToTable("AuditLogs", "dbo");
 
             // key
             builder.HasKey(t => t.Id);

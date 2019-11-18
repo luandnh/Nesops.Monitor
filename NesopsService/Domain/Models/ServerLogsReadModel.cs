@@ -18,7 +18,9 @@ namespace NesopsService.Domain.Models
 
         public string Message { get; set; }
 
-        public int Level { get; set; }
+        public string Type { get; set; }
+
+        public string Level { get; set; }
 
         public bool Active { get; set; }
 

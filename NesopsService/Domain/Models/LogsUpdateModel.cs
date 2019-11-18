@@ -10,6 +10,8 @@ namespace NesopsService.Domain.Models
 
         public int SeqId { get; set; }
 
+        public Guid SysId { get; set; }
+
         public string Message { get; set; }
 
         public string Level { get; set; }

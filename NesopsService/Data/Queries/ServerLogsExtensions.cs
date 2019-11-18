@@ -26,11 +26,6 @@ namespace NesopsService.Data.Queries
             return new ValueTask<NesopsService.Data.Entities.ServerLogs>(task);
         }
 
-        public static IQueryable<NesopsService.Data.Entities.ServerLogs> ByServerId(this IQueryable<NesopsService.Data.Entities.ServerLogs> queryable, Guid serverId)
-        {
-            return queryable.Where(q => q.ServerId == serverId);
-        }
-
         #endregion
 
     }

@@ -17,6 +17,8 @@ namespace NesopsService.Data.Entities
 
         public int SeqId { get; set; }
 
+        public Guid SysId { get; set; }
+
         public string Message { get; set; }
 
         public string Level { get; set; }
@@ -29,7 +31,7 @@ namespace NesopsService.Data.Entities
 
         public DateTime UpdateAt { get; set; } = DateTime.UtcNow.AddHours(7);
 
-        public bool Active { get; set; } = true;
+        public bool Active { get; set; }
 
         #endregion
 
