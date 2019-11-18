@@ -45,6 +45,7 @@ namespace Nesops.Monitor.Log.Client.Domains
                 RequestUri = new Uri(uri, UriKind.Relative),
                 Content = new StringContent(json, UnicodeEncoding.UTF8, "application/json")
             };
+            mess.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appSettings.AuthorizeConfiguration.access_token);
             var result = _client.Http.SendAsync(mess).Result;
 
         }
@@ -65,6 +66,7 @@ namespace Nesops.Monitor.Log.Client.Domains
                 RequestUri = new Uri(uri, UriKind.Relative),
                 Content = new StringContent(json, UnicodeEncoding.UTF8, "application/json")
             };
+            mess.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appSettings.AuthorizeConfiguration.access_token);
             var result = _client.Http.SendAsync(mess).Result;
         }
         public void Warning(string message)
@@ -84,6 +86,7 @@ namespace Nesops.Monitor.Log.Client.Domains
                 RequestUri = new Uri(uri, UriKind.Relative),
                 Content = new StringContent(json, UnicodeEncoding.UTF8, "application/json")
             };
+            mess.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appSettings.AuthorizeConfiguration.access_token);
             var result = _client.Http.SendAsync(mess).Result;
         }
         public void Warning(string message, string logEvent)
@@ -103,9 +106,10 @@ namespace Nesops.Monitor.Log.Client.Domains
                 RequestUri = new Uri(uri, UriKind.Relative),
                 Content = new StringContent(json, UnicodeEncoding.UTF8, "application/json")
             };
+            mess.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appSettings.AuthorizeConfiguration.access_token);
             var result = _client.Http.SendAsync(mess).Result;
         }
-        public void Exception(string message)
+        public void Error(string message)
         {
             var uri = _routePrefix;
             var log = new Logs()
@@ -122,6 +126,7 @@ namespace Nesops.Monitor.Log.Client.Domains
                 RequestUri = new Uri(uri, UriKind.Relative),
                 Content = new StringContent(json, UnicodeEncoding.UTF8, "application/json")
             };
+            mess.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appSettings.AuthorizeConfiguration.access_token);
             var result = _client.Http.SendAsync(mess).Result;
         }
         public void Error(string message, string logEvent)
@@ -141,6 +146,7 @@ namespace Nesops.Monitor.Log.Client.Domains
                 RequestUri = new Uri(uri, UriKind.Relative),
                 Content = new StringContent(json, UnicodeEncoding.UTF8, "application/json")
             };
+            mess.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appSettings.AuthorizeConfiguration.access_token);
             var result = _client.Http.SendAsync(mess).Result;
         }
         public void Error(Exception ex)
@@ -160,6 +166,7 @@ namespace Nesops.Monitor.Log.Client.Domains
                 RequestUri = new Uri(uri, UriKind.Relative),
                 Content = new StringContent(json, UnicodeEncoding.UTF8, "application/json")
             };
+            mess.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appSettings.AuthorizeConfiguration.access_token);
             var result = _client.Http.SendAsync(mess).Result;
         }
         public void Error(Exception ex, string logEvent)
@@ -179,6 +186,7 @@ namespace Nesops.Monitor.Log.Client.Domains
                 RequestUri = new Uri(uri, UriKind.Relative),
                 Content = new StringContent(json, UnicodeEncoding.UTF8, "application/json")
             };
+            mess.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appSettings.AuthorizeConfiguration.access_token);
             var result = _client.Http.SendAsync(mess).Result;
         }
         private async void CheckAuthorize()

@@ -6,9 +6,6 @@ namespace NesopsService.Domain.Models
     public partial class AuditLogsCreateModel
     {
         #region Generated Properties
-        public Guid Id { get; set; }
-
-        public int SeqId { get; set; }
 
         public Guid SysId { get; set; }
 
@@ -19,12 +16,6 @@ namespace NesopsService.Domain.Models
         public string Exception { get; set; }
 
         public string LogEvent { get; set; }
-
-        public DateTime CreateAt { get; set; }
-
-        public DateTime UpdateAt { get; set; }
-
-        public bool Active { get; set; }
 
         #endregion
 

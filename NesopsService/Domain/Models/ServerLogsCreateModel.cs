@@ -6,13 +6,6 @@ namespace NesopsService.Domain.Models
     public partial class ServerLogsCreateModel
     {
         #region Generated Properties
-        public Guid Id { get; set; }
-
-        public DateTime CreateAt { get; set; }
-
-        public DateTime UpdateAt { get; set; }
-
-        public int SeqId { get; set; }
 
         public Guid ServerId { get; set; }
 
@@ -21,8 +14,6 @@ namespace NesopsService.Domain.Models
         public string Type { get; set; }
 
         public string Level { get; set; }
-
-        public bool Active { get; set; }
 
         #endregion
 

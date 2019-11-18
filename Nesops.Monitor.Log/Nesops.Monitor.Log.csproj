@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Nesops.Monitor.Log.Client\Nesops.Monitor.Log.Client.csproj" />
     <ProjectReference Include="..\NesopsService\NesopsService.csproj" />
   </ItemGroup>
 

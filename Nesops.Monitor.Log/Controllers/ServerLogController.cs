@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,13 +19,13 @@ namespace Nesops.Monitor.Log.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LogsController : EntityControllerBase<NesopsMonitorContext, Logs, LogsReadModel, LogsCreateModel, LogsUpdateModel, LogRequestModel, LogService>
+    public class ServerLogController : EntityControllerBase<NesopsMonitorContext, ServerLogs, ServerLogsReadModel, ServerLogsCreateModel, ServerLogsUpdateModel, ServerLogRequestModel, ServerLogService>
     {
-        public LogsController(NesopsMonitorContext dataContext, IMapper mapper, LogService service) : base(dataContext, mapper, service)
+        public ServerLogController(NesopsMonitorContext dataContext, IMapper mapper, ServerLogService service) : base(dataContext, mapper, service)
         {
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetResponseModel<LogsReadModel, LogRequestModel>>> Get(Guid id, [FromQuery] LogRequestModel requestModel, CancellationToken cancellationToken)
+        public async Task<ActionResult<GetResponseModel<ServerLogsReadModel, ServerLogRequestModel>>> Get(Guid id, [FromQuery] ServerLogRequestModel requestModel, CancellationToken cancellationToken)
         {
             var readModel = await ReadModel(id, requestModel, cancellationToken);
             if (readModel == null)
@@ -34,16 +33,16 @@ namespace Nesops.Monitor.Log.Controllers
             return Ok(readModel);
         }
         [HttpGet]
-        public async Task<ActionResult<GetResponseModel<LogsReadModel, LogRequestModel>>> List([FromQuery] LogRequestModel requestModel, CancellationToken cancellationToken)
+        public async Task<ActionResult<GetResponseModel<ServerLogsReadModel, ServerLogRequestModel>>> List([FromQuery] ServerLogRequestModel requestModel, CancellationToken cancellationToken)
         {
             var readModels = await ListModel(requestModel, cancellationToken);
             return Ok(readModels);
         }
         [HttpPost]
-        public async Task<ActionResult<LogsReadModel>> Create([FromBody]LogsCreateModel createModel, CancellationToken cancellationToken)
+        public async Task<ActionResult<ServerLogsReadModel>> Create([FromBody]ServerLogsCreateModel createModel, CancellationToken cancellationToken)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            createModel.SysId = Guid.Parse(userId);
+            createModel.ServerId = Guid.Parse(userId);
             var readModel = await CreateModel(createModel, cancellationToken);
             return CreatedAtAction(nameof(Get), new { id = readModel.Id }, readModel);
         }

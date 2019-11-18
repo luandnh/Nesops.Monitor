@@ -12,7 +12,7 @@ namespace Nesops.Monitor.LogConsole
             try
             {
                 NesopsAuthorize authorize = new NesopsAuthorize();
-                var result = authorize.CheckAuthorizeExpiredTime();
+                var result = authorize.UpdateAuthorize();
                 Console.WriteLine(result);
             }
             catch (Exception ex) { Console.WriteLine(ex.StackTrace); }

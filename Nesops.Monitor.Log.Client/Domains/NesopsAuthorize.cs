@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Nesops.Monitor.Log.Client.Models;
+﻿using Nesops.Monitor.Log.Client.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -30,7 +29,7 @@ namespace Nesops.Monitor.Log.Client.Domains
         public async ValueTask<NesopsBaseResponse<AuthorizeResponseModel>> Authorize(string username, string password)
         {
             var uri = _routePrefix;
-            if(username == null || password == null)
+            if (username == null || password == null)
             {
                 return null;
             }
