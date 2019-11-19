@@ -28,7 +28,7 @@ namespace Nesops.Monitor.Log.Client.Domains
             this._client = client;
             CheckAuthorize();
         }
-        public void Information(string message, string type)
+        public async ValueTask<HttpResponseMessage> Information(string message, string type)
         {
             var uri = _routePrefix;
             var log = new ServerLog()
@@ -45,14 +45,15 @@ namespace Nesops.Monitor.Log.Client.Domains
                 Content = new StringContent(json, UnicodeEncoding.UTF8, "application/json")
             };
             mess.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appSettings.AuthorizeConfiguration.access_token);
-            var result = _client.Http.SendAsync(mess).Result;
-
+            return await _client.Http.SendAsync(mess);
         }
         private void CheckAuthorize()
         {
             var authorize = new NesopsAuthorize();
             if (!authorize.CheckAuthorizeExpiredTime())
-                authorize.UpdateAuthorize();
+            {
+                var res = authorize.UpdateAuthorize().Result;
+            }
         }
     }
 }

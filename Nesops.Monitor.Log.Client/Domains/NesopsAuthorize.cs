@@ -26,7 +26,7 @@ namespace Nesops.Monitor.Log.Client.Domains
             _appSettings = client.NesopsHttpClientConfig();
             this._client = client;
         }
-        public async ValueTask<NesopsBaseResponse<AuthorizeResponseModel>> Authorize(string username, string password)
+        public async ValueTask<HttpResponseMessage> Authorize(string username, string password)
         {
             var uri = _routePrefix;
             if (username == null || password == null)
@@ -45,16 +45,8 @@ namespace Nesops.Monitor.Log.Client.Domains
                 RequestUri = new Uri(uri, UriKind.Relative),
                 Content = new StringContent(json, UnicodeEncoding.UTF8, "application/json")
             };
-            var result = _client.Http.SendAsync(mess).Result;
-
-
-            if (result.IsSuccessStatusCode)
-            {
-                var resJson = await result.Content.ReadAsStringAsync();
-                var res = JsonConvert.DeserializeObject<NesopsBaseResponse<AuthorizeResponseModel>>(resJson);
-                return res;
-            }
-            return null;
+            var result = await _client.Http.SendAsync(mess);
+            return result;
         }
         public async Task<HttpResponseMessage> CheckToken(string token)
         {
@@ -78,16 +70,22 @@ namespace Nesops.Monitor.Log.Client.Domains
             }
             return null;
         }
-        public bool UpdateAuthorize()
+        public async ValueTask<bool> UpdateAuthorize()
         {
-            var result =  Authorize(_appSettings.LocalUsername, _appSettings.LocalPassword).Result;
+            var result = await  Authorize(_appSettings.LocalUsername, _appSettings.LocalPassword);
+            if (!result.IsSuccessStatusCode)
+            {
+                return false;
+            }
             if (result == null)
             {
                 return false;
             }
-            _client.UpdateAppSettings<string>("NesopsConfiguration:AuthorizeConfiguration:Access_token", result.data.access_token);
-            _client.UpdateAppSettings<string>("NesopsConfiguration:AuthorizeConfiguration:Expire_utc", result.data.expire_utc.ToString());
-            _client.UpdateAppSettings<string>("NesopsConfiguration:AuthorizeConfiguration:Issued_utc", result.data.issued_utc.ToString());
+            var resJson = await result.Content.ReadAsStringAsync();
+            var res = JsonConvert.DeserializeObject<NesopsBaseResponse<AuthorizeResponseModel>>(resJson);
+            _client.UpdateAppSettings<string>("NesopsConfiguration:AuthorizeConfiguration:Access_token", res.data.access_token);
+            _client.UpdateAppSettings<string>("NesopsConfiguration:AuthorizeConfiguration:Expire_utc", res.data.expire_utc.ToString());
+            _client.UpdateAppSettings<string>("NesopsConfiguration:AuthorizeConfiguration:Issued_utc", res.data.issued_utc.ToString());
             return true;
         }
         public bool CheckAuthorizeExpiredTime()

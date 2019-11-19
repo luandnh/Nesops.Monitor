@@ -22,6 +22,7 @@ namespace Nesops.Monitor.Log.Client
             {
                 ServerCertificateCustomValidationCallback = (a, b, c, d) => true
             });
+            Http.Timeout = TimeSpan.FromMinutes(1);
             Http.BaseAddress = new Uri(clientInfo.BaseAddress);
         }
         public NesopsHttpClient(string httpClientUrl)
