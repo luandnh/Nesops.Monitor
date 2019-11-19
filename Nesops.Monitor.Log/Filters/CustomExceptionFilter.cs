@@ -19,16 +19,16 @@ namespace Nesops.Monitor.Log.Filters
         }
         public void OnException(ExceptionContext context)
         {
-            context.Result = new ObjectResult(new BaseResponseModel<object> { message = context.Exception.Message, code = (int)HttpStatusCode.InternalServerError })
-            {
-                StatusCode = 500,
-            };
-            if (context.HttpContext.Request.Method == "POST")
-            {
-                Log.Error(context.Exception);
-            }
-            Log.Error(context.Exception);
-            context.ExceptionHandled = true;
+            //context.Result = new ObjectResult(new BaseResponseModel<object> { message = context.Exception.Message, code = (int)HttpStatusCode.InternalServerError })
+            //{
+            //    StatusCode = 500,
+            //};
+            //if (context.HttpContext.Request.Method == "POST")
+            //{
+            //    Log.Error(context.Exception);
+            //}
+            //Log.Error(context.Exception);
+            //context.ExceptionHandled = true;
         }
     }
 }

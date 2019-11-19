@@ -18,4 +18,12 @@ namespace Nesops.Monitor.Log.Client.Models
         public string LogEvent { get; set; }
 
     }
+    public class ServerLog
+    {
+        public string Message { get; set; }
+
+        public string Type { get; set; }
+
+        public string Level { get; set; }
+    }
 }

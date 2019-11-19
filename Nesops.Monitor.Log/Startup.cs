@@ -39,7 +39,7 @@ namespace Nesops.Monitor.Log
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<NesopsLog>();
+            services.AddScoped<NesopsLog>();
             #region Authorization Config
             JWTBuilder.BuildJWTService(services);
             #endregion
@@ -123,7 +123,7 @@ namespace Nesops.Monitor.Log
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler();
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
