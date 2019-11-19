@@ -10,11 +10,6 @@ namespace Nesops.Monitor.Log.Filters
 {
     public class ValidatorActionFilter : IActionFilter
     {
-        private readonly NesopsLog Log;
-        public ValidatorActionFilter(NesopsLog _log)
-        {
-            this.Log = _log;
-        }
         public void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (!filterContext.ModelState.IsValid)

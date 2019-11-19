@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Net.Http.Headers;
+using Nesops.Monitor.Log.Client.Domains;
 using NesopsService.Service.Models.ResponseModels;
 
 namespace Nesops.Monitor.Log.Middlewares
@@ -25,7 +26,7 @@ namespace Nesops.Monitor.Log.Middlewares
             _next = next;
         }
 
-        public async Task Invoke(HttpContext context)
+        public async Task Invoke(HttpContext context, NesopsLog Log)
         {
             var bodyStr = "";
             if (context.Request.Method != "GET")
@@ -53,9 +54,9 @@ namespace Nesops.Monitor.Log.Middlewares
                         StatusCode = 500,
                     };
                     var method = context.Request.Method;
-                    if (method == "POST")
+                    if (method == "POST" || method == "PUT")
                     {
-                        var resB = bodyStr;
+                        Log.Error(ex, bodyStr);
                     }
                     // now we have a IActionResult, let's return it
                     RouteData routeData = context.GetRouteData();

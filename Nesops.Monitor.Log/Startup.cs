@@ -108,10 +108,6 @@ namespace Nesops.Monitor.Log
                     builder.AllowAnyMethod();
                 });
             });
-            //services.Configure<IISServerOptions>(options =>
-            //{
-            //    options.AllowSynchronousIO = true;
-            //});
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(typeof(ValidatorActionFilter));
