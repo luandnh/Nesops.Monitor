@@ -124,7 +124,7 @@ namespace Nesops.Monitor.Log
             }
             else
             {
-                app.UseExceptionHandler();
+                app.UseExceptionHandler("/Home/Error/");
             }
             app.UseMiddleware<CustomMiddleware>();
             app.UseHttpsRedirection();
