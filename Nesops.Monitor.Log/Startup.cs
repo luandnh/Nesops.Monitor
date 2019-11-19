@@ -17,6 +17,7 @@ using Nesops.Monitor.Log.Filters;
 using FluentValidation.AspNetCore;
 using Nesops.Monitor.Log.Client.Configurations.JWT;
 using Nesops.Monitor.Log.Client.Domains;
+using Nesops.Monitor.Log.Middlewares;
 
 namespace Nesops.Monitor.Log
 {
@@ -107,10 +108,14 @@ namespace Nesops.Monitor.Log
                     builder.AllowAnyMethod();
                 });
             });
+            //services.Configure<IISServerOptions>(options =>
+            //{
+            //    options.AllowSynchronousIO = true;
+            //});
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(typeof(ValidatorActionFilter));
-                options.Filters.Add(typeof(CustomExceptionFilter));
+                //options.Filters.Add(typeof(CustomExceptionFilter));
             }).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
         }
 
@@ -125,6 +130,7 @@ namespace Nesops.Monitor.Log
             {
                 app.UseExceptionHandler();
             }
+            app.UseMiddleware<CustomMiddleware>();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
