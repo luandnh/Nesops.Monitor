@@ -16,7 +16,6 @@ using System.IO;
 using Nesops.Monitor.Log.Filters;
 using FluentValidation.AspNetCore;
 using Nesops.Monitor.Log.Client.Configurations.JWT;
-using Nesops.Monitor.Log.Client.Domains;
 using Nesops.Monitor.Log.Middlewares;
 
 namespace Nesops.Monitor.Log
@@ -40,7 +39,6 @@ namespace Nesops.Monitor.Log
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<NesopsLog>();
             #region Authorization Config
             JWTBuilder.BuildJWTService(services);
             #endregion
