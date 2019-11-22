@@ -20,15 +20,15 @@ namespace Nesops.Monitor.Log.Client.Domains
             _appSettings = client.NesopsHttpClientConfig();
             client = new NesopsHttpClient(_appSettings.MonitorUrl);
             this._client = client;
-            CheckAuthorize();
+            CheckAuthorize().Wait();
         }
         public NesopsLog(NesopsHttpClient client)
         {
             _appSettings = client.NesopsHttpClientConfig();
             this._client = client;
-            CheckAuthorize();
+            CheckAuthorize().Wait();
         }
-        public async ValueTask<HttpResponseMessage> Information(string message)
+        public async Task<HttpResponseMessage> Information(string message)
         {
             var uri = _routePrefix;
             var log = new Logs()
@@ -48,7 +48,7 @@ namespace Nesops.Monitor.Log.Client.Domains
             mess.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appSettings.AuthorizeConfiguration.access_token);
             return await _client.Http.SendAsync(mess);
         }
-        public async ValueTask<HttpResponseMessage> Information(string message,string logEvent)
+        public async Task<HttpResponseMessage> Information(string message,string logEvent)
         {
             var uri = _routePrefix;
             var log = new Logs()
@@ -68,7 +68,7 @@ namespace Nesops.Monitor.Log.Client.Domains
             mess.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appSettings.AuthorizeConfiguration.access_token);
             return await _client.Http.SendAsync(mess);
         }
-        public async ValueTask<HttpResponseMessage> Warning(string message)
+        public async Task<HttpResponseMessage> Warning(string message)
         {
             var uri = _routePrefix;
             var log = new Logs()
@@ -88,7 +88,7 @@ namespace Nesops.Monitor.Log.Client.Domains
             mess.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appSettings.AuthorizeConfiguration.access_token);
             return await _client.Http.SendAsync(mess);
         }
-        public async ValueTask<HttpResponseMessage> Warning(string message, string logEvent)
+        public async Task<HttpResponseMessage> Warning(string message, string logEvent)
         {
             var uri = _routePrefix;
             var log = new Logs()
@@ -108,7 +108,7 @@ namespace Nesops.Monitor.Log.Client.Domains
             mess.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appSettings.AuthorizeConfiguration.access_token);
             return await _client.Http.SendAsync(mess);
         }
-        public async ValueTask<HttpResponseMessage> Error(string message)
+        public async Task<HttpResponseMessage> Error(string message)
         {
             var uri = _routePrefix;
             var log = new Logs()
@@ -128,7 +128,7 @@ namespace Nesops.Monitor.Log.Client.Domains
             mess.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appSettings.AuthorizeConfiguration.access_token);
             return await _client.Http.SendAsync(mess);
         }
-        public async ValueTask<HttpResponseMessage> Error(string message, string logEvent)
+        public async Task<HttpResponseMessage> Error(string message, string logEvent)
         {
             var uri = _routePrefix;
             var log = new Logs()
@@ -148,7 +148,7 @@ namespace Nesops.Monitor.Log.Client.Domains
             mess.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appSettings.AuthorizeConfiguration.access_token);
             return await _client.Http.SendAsync(mess);
         }
-        public async ValueTask<HttpResponseMessage> Error(Exception ex)
+        public async Task<HttpResponseMessage> Error(Exception ex)
         {
             var uri = _routePrefix;
             var log = new Logs()
@@ -168,7 +168,7 @@ namespace Nesops.Monitor.Log.Client.Domains
             mess.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appSettings.AuthorizeConfiguration.access_token);
             return await _client.Http.SendAsync(mess);
         }
-        public async ValueTask<HttpResponseMessage> Error(Exception ex, string logEvent)
+        public async Task<HttpResponseMessage> Error(Exception ex, string logEvent)
         {
             var uri = _routePrefix;
             var log = new Logs()
@@ -188,11 +188,11 @@ namespace Nesops.Monitor.Log.Client.Domains
             mess.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _appSettings.AuthorizeConfiguration.access_token);
             return await _client.Http.SendAsync(mess);
         }
-        private void CheckAuthorize()
+        private async Task CheckAuthorize()
         {
             var authorize = new NesopsAuthorize();
-            if (!authorize.CheckAuthorizeExpiredTime()) { 
-                var res = authorize.UpdateAuthorize().Result;
+            if (! await authorize.CheckAuthorizeExpiredTime()) {
+                var result = await authorize.UpdateAuthorize();
             }
         }
     }

@@ -34,6 +34,7 @@ namespace Nesops.Monitor.Log.Client
             {
                 ServerCertificateCustomValidationCallback = (a, b, c, d) => true
             });
+            Http.Timeout = TimeSpan.FromMinutes(1);
             Http.BaseAddress = new Uri(baseAddress);
         }
         public AppSettingsModel NesopsHttpClientConfig()
@@ -94,7 +95,7 @@ namespace Nesops.Monitor.Log.Client
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error writing app settings");
+                Console.WriteLine("Error writing app settings : "+ex.Message);
             }
         }
         public void ResetAppSettings()

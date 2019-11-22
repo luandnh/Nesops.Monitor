@@ -88,13 +88,14 @@ namespace Nesops.Monitor.Log.Client.Domains
             _client.UpdateAppSettings<string>("NesopsConfiguration:AuthorizeConfiguration:Issued_utc", res.data.issued_utc.ToString());
             return true;
         }
-        public bool CheckAuthorizeExpiredTime()
+        public async Task<bool> CheckAuthorizeExpiredTime()
         {
-            var UtcTime = DateTime.UtcNow.AddHours(7);
-            var expired_utc_string = _appSettings.AuthorizeConfiguration.expire_utc;
-            var expired_utc_time = DateTime.Parse(expired_utc_string);
-            var check = UtcTime.CompareTo(expired_utc_time);
-            return check <= 0;
+            var result = await CheckToken(_appSettings.AuthorizeConfiguration.access_token);
+            if (!result.IsSuccessStatusCode)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
